@@ -17,7 +17,7 @@ def publish_state(client, broker_url):
             state = random.randint(1, 100)  # Simulate some state
             print(f"Publishing state: {state} to {broker_url}")
             client.publish(TOPIC, state)
-            time.sleep(5)  # Publish every 5 seconds
+            time.sleep(30)  # Publish every n seconds
     except KeyboardInterrupt:
         client.loop_stop()
         client.disconnect()
