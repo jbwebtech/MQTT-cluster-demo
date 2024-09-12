@@ -17,12 +17,40 @@ HEARTBEAT_MESSAGE = "publisher6"    # Heartbeat message from Publisher 6
 state = 0  # Shared state to maintain consistency
 
 def on_connect(client, userdata, flags, rc):
+    """
+    MQTT callback for when the client receives a CONNACK response from the server.
+
+    The value of rc determines success or not:
+        0: Connection successful
+        1: Connection refused - incorrect protocol version
+        2: Connection refused - invalid client identifier
+        3: Connection refused - server unavailable
+        4: Connection refused - bad username or password
+        5: Connection refused - not authorised
+        6-255: Currently unused.
+
+    :param client: MQTT client instance
+    :param userdata: User data set in Client() or userdata_set()
+    :param flags: Response flags sent by the broker
+    :param rc: Result code from the broker
+    """
     print(f"Connected to broker {PRIMARY_BROKER_URL}:{PRIMARY_BROKER_PORT} with result code {rc}")
     # Subscribe to synchronization topics
     client.subscribe(SYNC_TOPIC)
     client.subscribe(HEARTBEAT_TOPIC)
 
 def on_message(client, userdata, msg):
+    """
+    MQTT callback for when a PUBLISH message is received from the server.
+
+    Updates the shared state and prints a message when a sync message is received
+    from the other publisher. Also prints a message when a heartbeat is received
+    from the other publisher.
+
+    :param client: MQTT client instance
+    :param userdata: User data set in Client() or userdata_set()
+    :param msg: Message object with topic and payload
+    """
     global state
     if msg.topic == SYNC_TOPIC:
         state = int(msg.payload.decode())  # Update state from sync messages
@@ -31,6 +59,11 @@ def on_message(client, userdata, msg):
         print(f"Heartbeat received: {msg.payload.decode()}")  # Monitor heartbeats
 
 def publish_state(client):
+    """
+    Publishes a random state to the broker every n seconds and synchronizes it across publishers.
+
+    :param client: MQTT client instance
+    """
     global state
     client.loop_start()
     try:
