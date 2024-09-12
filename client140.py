@@ -9,10 +9,36 @@ BACKUP_BROKER_PORT = 1856           # Broker 6 port
 TOPIC = "state/topic"
 
 def on_connect(client, userdata, flags, rc):
+    """
+    MQTT callback for when the client receives a CONNACK response from the server.
+
+    The value of rc determines success or not:
+        0: Connection successful
+        1: Connection refused - incorrect protocol version
+        2: Connection refused - invalid client identifier
+        3: Connection refused - server unavailable
+        4: Connection refused - bad username or password
+        5: Connection refused - not authorised
+        6-255: Currently unused.
+
+    :param client: MQTT client instance
+    :param userdata: User data set in Client() or userdata_set()
+    :param flags: Response flags sent by the broker
+    :param rc: Result code from the broker
+    """
     print(f"Connected to MQTT Broker at {BROKER_URL}:{BROKER_PORT} with result code {rc}")
     client.subscribe(TOPIC)
 
 def on_message(client, userdata, msg):
+    """
+    MQTT callback for when a PUBLISH message is received from the server.
+
+    Prints a message with the received payload and topic
+
+    :param client: MQTT client instance
+    :param userdata: User data set in Client() or userdata_set()
+    :param msg: Message object with topic and payload
+    """
     print(f"Received message: {msg.payload.decode()} from topic: {msg.topic}")
 
 if __name__ == "__main__":
