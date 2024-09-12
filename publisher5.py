@@ -4,7 +4,7 @@ import time
 import random
 import paho.mqtt.client as mqtt
 
-BROKER_URLS = [("localhost", 1855), ("localhost", 1856)]  # Broker 5 and Broker 6
+BROKER_URLS = [("127.0.0.1", 1855), ("127.0.0.1", 1856)]  # Broker 5 and Broker 6
 TOPIC = "state/topic"
 
 def on_connect(client, userdata, flags, rc):

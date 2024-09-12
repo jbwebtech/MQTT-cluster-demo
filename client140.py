@@ -2,7 +2,7 @@
 
 import paho.mqtt.client as mqtt
 
-BROKER_URL = "localhost"  # Single endpoint; brokers are bridged
+BROKER_URL = "127.0.0.1"  # Single endpoint; brokers are bridged
 PORT = 1855
 TOPIC = "state/topic"
 
