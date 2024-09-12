@@ -1,7 +1,9 @@
+# Client 140 App
+
 import paho.mqtt.client as mqtt
 
 BROKER_URL = "localhost"  # Single endpoint; brokers are bridged
-PORT = 1888
+PORT = 1855
 TOPIC = "state/topic"
 
 def on_connect(client, userdata, flags, rc):
