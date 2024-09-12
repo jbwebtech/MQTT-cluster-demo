@@ -4,8 +4,8 @@ import paho.mqtt.client as mqtt
 
 BROKER_URL = "127.0.0.1"            # Primary brkoer host; brokers are bridged
 BROKER_PORT = 1855                  # Primary broker port; brokers are bridged
-BACKUP_BROKER_URL = "127.0.0.1"     # Broker 6 is the backup connection if Broker 5 is unavailable
-BACKUP_BROKER_PORT = 1856           # bROKER 6 port
+BACKUP_BROKER_URL = "127.0.0.1"     # Broker 6 is the backup connection if Broker 6 is available
+BACKUP_BROKER_PORT = 1856           # Broker 6 port
 TOPIC = "state/topic"
 
 def on_connect(client, userdata, flags, rc):
